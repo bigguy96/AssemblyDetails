@@ -20,22 +20,21 @@ namespace AssemblyReader
 
                 foreach (var type in loaded)
                 {
-                    var interf = type.Name;
+                    var interfaceName = type.Name;
                     var methods = type.GetMethods();
 
                     foreach (var methodInfo in methods)
                     {
-                        var mname = methodInfo.Name;
+                        var methodName = methodInfo.Name;
                         var name = methodInfo.DeclaringType?.Name;
                         var ns = methodInfo.DeclaringType?.Namespace;
                         var rt = methodInfo.ReturnType.ToString();
+                        var rt1 = methodInfo.ReturnType.GenericTypeArguments[0].Name;
                         var param = methodInfo.GetParameters();
 
                         var pp = param.Select(x => new
                         {
-                            ParameterName = x.Name,
-                            ParameterType = x.ParameterType.Name
-
+                            ParameterType = $"{x.ParameterType.Name} {x.Name}"
                         });
 
                         foreach (var parameterInfo in param)
