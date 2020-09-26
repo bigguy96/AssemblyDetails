@@ -1,0 +1,48 @@
+﻿Activate a user account
+Description
+The Activate() method is used to assign a GCKey MBUN to a user via an activation (enrollment) key.
+
+Package Details
+Namespace
+MTOA.BLL.Interfaces;
+
+Interface
+IAccountManager
+
+Execution
+_accountManager.Activate( UserActivationContext userActivationContext )
+
+Returns
+MTOA.DomainObjects.User
+
+API Endpoint
+[POST] /api/v1/account/activate
+
+Returns
+200 - Ok
+
+Example
+using MTOA.BLL.Interfaces;
+
+int MyServiceId = 123;
+string enrollmentKey = "xyz";  // Retrieve from URI
+
+User user = _accountManager.Activate(enrollmentKey, BaseController.AuthenticationContext, MyServiceId ).Result;
+if (user != null)
+{
+    _logger.Info( $"User {user.FirstName} {user.LastName} is now bound to their account using {enrollmentKey}");
+} else {
+    _logger.Error($"Failed to bind user to key {enrollmentKey}");
+}
+Classification
+???
+
+Caveats
+???
+
+Related concepts
+???
+
+Related references
+IAccountManager.Register()
+IAccountManager.SetActivationKey()
