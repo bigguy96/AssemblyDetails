@@ -2,16 +2,17 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace AssemblyReader
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             var files = Directory.GetFiles(Path.Combine(myDocuments, "dll"), "*.dll");
-
+            var sb = new StringBuilder("Documentation");
 
             foreach (var file in files)
             {
@@ -20,34 +21,40 @@ namespace AssemblyReader
 
                 foreach (var type in loaded)
                 {
-                    var interfaceName = type.Name;
+                   sb.AppendLine("");
+                   sb.AppendLine($"Interface: {type.Name}");
                     var methods = type.GetMethods();
 
                     foreach (var methodInfo in methods)
                     {
-                        var methodName = methodInfo.Name;
-                        var name = methodInfo.DeclaringType?.Name;
-                        var ns = methodInfo.DeclaringType?.Namespace;
-                        var rt = methodInfo.ReturnType.ToString();
-                        var rt1 = methodInfo.ReturnType.GenericTypeArguments[0].Name;
-                        var param = methodInfo.GetParameters();
-
-                        var pp = param.Select(x => new
+                        sb.AppendLine($"Method: {methodInfo.Name}");
+                        sb.AppendLine($"Returns: {methodInfo.ReturnType}");
+                        
+                        var parameters = methodInfo.GetParameters();
+                        var values = parameters.Select(x => new
                         {
                             ParameterType = $"{x.ParameterType.Name} {x.Name}"
                         });
 
-                        foreach (var parameterInfo in param)
-                        {
-                            var p = parameterInfo.Name;
-                            var t = parameterInfo.ParameterType.Name;
-                        }
+                        sb.AppendLine($"Parameters: {string.Join(" ,", values)}");
+                        sb.AppendLine("");
+                        //var name = methodInfo.DeclaringType?.Name;
+                        //var ns = methodInfo.DeclaringType?.Namespace;
+                        //var rt1 = methodInfo.ReturnType.GenericTypeArguments[0].Name;
+
+                        //foreach (var parameterInfo in param)
+                        //{
+                        //    var p = parameterInfo.Name;
+                        //    var t = parameterInfo.ParameterType.Name;
+                        //}
                     }
 
                 }
             }
 
+            File.WriteAllText(Path.Combine(myDocuments,"dll", "dll.txt"), sb.ToString());
 
+            Console.WriteLine(sb.ToString());
             Console.WriteLine("Done!");
             Console.ReadLine();
 
