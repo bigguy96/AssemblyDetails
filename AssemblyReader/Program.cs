@@ -30,14 +30,10 @@ namespace AssemblyReader
                         sb.AppendLine($"Method: {methodInfo.Name}");
                         sb.AppendLine($"Returns: {methodInfo.ReturnType}");
                         
-                        var parameters = methodInfo.GetParameters();
-                        var values = parameters.Select(x => new
-                        {
-                            ParameterType = $"{x.ParameterType.Name} {x.Name}"
-                        });
-
-                        sb.AppendLine($"Parameters: {string.Join(" ,", values)}");
+                        var parameters = methodInfo.GetParameters().Select(x => new string($"{x.ParameterType.Name} {x.Name}".ToCharArray()));
+                        sb.AppendLine($"Parameters: {string.Join(", ", parameters)}");
                         sb.AppendLine("");
+
                         //var name = methodInfo.DeclaringType?.Name;
                         //var ns = methodInfo.DeclaringType?.Namespace;
                         //var rt1 = methodInfo.ReturnType.GenericTypeArguments[0].Name;
