@@ -13,6 +13,7 @@ namespace AssemblyReader
             var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             var files = Directory.GetFiles(Path.Combine(myDocuments, "dll"), "*.dll");
             var sb = new StringBuilder("Documentation");
+            //MTOA.BLL.Interfaces.dll
 
             foreach (var file in files)
             {
