@@ -2,134 +2,17 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace AssemblyReader
 {
+    /// <summary>
+    /// Xml document parser
+    /// </summary>
     public static class XmlDocumentReader
     {
-        #region System.Reflection.Assembly
-
-        /// <summary>Enumerates through all the constructors with a custom attribute.</summary>
-        /// <typeparam name="AttributeType">The type of the custom attribute.</typeparam>
-        /// <param name="assembly">The assembly to iterate through the constructors of.</param>
-        /// <returns>The IEnumerable of the constructors with the provided attribute type.</returns>
-        public static System.Collections.Generic.IEnumerable<ConstructorInfo> GetConstructorInfosWithAttribute<AttributeType>(this Assembly assembly)
-            where AttributeType : Attribute
-        {
-            foreach (Type type in assembly.GetTypes())
-            {
-                foreach (ConstructorInfo constructorInfo in type.GetConstructors(
-                    BindingFlags.Instance |
-                    BindingFlags.Public |
-                    BindingFlags.NonPublic))
-                {
-                    if (constructorInfo.GetCustomAttributes(typeof(AttributeType), true).Length > 0)
-                    {
-                        yield return constructorInfo;
-                    }
-                }
-            }
-        }
-
-        /// <summary>Enumerates through all the properties with a custom attribute.</summary>
-        /// <typeparam name="AttributeType">The type of the custom attribute.</typeparam>
-        /// <param name="assembly">The assembly to iterate through the properties of.</param>
-        /// <returns>The IEnumerable of the properties with the provided attribute type.</returns>
-        public static System.Collections.Generic.IEnumerable<PropertyInfo> GetPropertyInfosWithAttribute<AttributeType>(this Assembly assembly)
-            where AttributeType : Attribute
-        {
-            foreach (Type type in assembly.GetTypes())
-            {
-                foreach (PropertyInfo propertyInfo in type.GetProperties(
-                    BindingFlags.Instance |
-                    BindingFlags.Static |
-                    BindingFlags.Public |
-                    BindingFlags.NonPublic))
-                {
-                    if (propertyInfo.GetCustomAttributes(typeof(AttributeType), true).Length > 0)
-                    {
-                        yield return propertyInfo;
-                    }
-                }
-            }
-        }
-
-        /// <summary>Enumerates through all the fields with a custom attribute.</summary>
-        /// <typeparam name="AttributeType">The type of the custom attribute.</typeparam>
-        /// <param name="assembly">The assembly to iterate through the fields of.</param>
-        /// <returns>The IEnumerable of the fields with the provided attribute type.</returns>
-        public static System.Collections.Generic.IEnumerable<FieldInfo> GetFieldInfosWithAttribute<AttributeType>(this Assembly assembly)
-            where AttributeType : Attribute
-        {
-            foreach (Type type in assembly.GetTypes())
-            {
-                foreach (FieldInfo fieldInfo in type.GetFields(
-                    BindingFlags.Instance |
-                    BindingFlags.Static |
-                    BindingFlags.Public |
-                    BindingFlags.NonPublic))
-                {
-                    if (fieldInfo.GetCustomAttributes(typeof(AttributeType), true).Length > 0)
-                    {
-                        yield return fieldInfo;
-                    }
-                }
-            }
-        }
-
-        /// <summary>Enumerates through all the methods with a custom attribute.</summary>
-        /// <typeparam name="AttributeType">The type of the custom attribute.</typeparam>
-        /// <param name="assembly">The assembly to iterate through the methods of.</param>
-        /// <returns>The IEnumerable of the methods with the provided attribute type.</returns>
-        public static System.Collections.Generic.IEnumerable<MethodInfo> GetMethodInfosWithAttribute<AttributeType>(this Assembly assembly)
-            where AttributeType : Attribute
-        {
-            foreach (Type type in assembly.GetTypes())
-            {
-                foreach (MethodInfo methodInfo in type.GetMethods(
-                    BindingFlags.Instance |
-                    BindingFlags.Static |
-                    BindingFlags.Public |
-                    BindingFlags.NonPublic))
-                {
-                    if (methodInfo.GetCustomAttributes(typeof(AttributeType), true).Length > 0)
-                    {
-                        yield return methodInfo;
-                    }
-                }
-            }
-        }
-
-        /// <summary>Enumerates through all the types with a custom attribute.</summary>
-        /// <typeparam name="AttributeType">The type of the custom attribute.</typeparam>
-        /// <param name="assembly">The assembly to iterate through the types of.</param>
-        /// <returns>The IEnumerable of the types with the provided attribute type.</returns>
-        public static System.Collections.Generic.IEnumerable<Type> GetTypesWithAttribute<AttributeType>(this Assembly assembly)
-            where AttributeType : Attribute
-        {
-            foreach (Type type in assembly.GetTypes())
-            {
-                if (type.GetCustomAttributes(typeof(AttributeType), true).Length > 0)
-                {
-                    yield return type;
-                }
-            }
-        }
-
-        /// <summary>Gets all the types in an assembly that derive from a base.</summary>
-        /// <typeparam name="Base">The base type to get the deriving types of.</typeparam>
-        /// <param name="assembly">The assmebly to perform the search on.</param>
-        /// <returns>The IEnumerable of the types that derive from the provided base.</returns>
-        public static System.Collections.Generic.IEnumerable<Type> GetDerivedTypes<Base>(this Assembly assembly)
-        {
-            Type @base = typeof(Base);
-            return assembly.GetTypes().Where(type =>
-                type != @base &&
-                @base.IsAssignableFrom(type));
-        }
+        #region System.Reflection.Assembly       
 
         /// <summary>Gets the file path of an assembly.</summary>
         /// <param name="assembly">The assembly to get the file path of.</param>
