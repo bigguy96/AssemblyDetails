@@ -1,0 +1,4 @@
+﻿https://docs.microsoft.com/en-us/archive/msdn-magazine/2019/october/csharp-accessing-xml-documentation-via-reflection#automatically-loading-the-xml-files-as-needed
+https://github.com/ZacharyPatten/Towel/blob/master/Tools/Towel_Documenting/Program.cs
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/see
+https://docs.microsoft.com/en-us/dotnet/api/system.reflection.assembly.loadfrom?view=netcore-3.1

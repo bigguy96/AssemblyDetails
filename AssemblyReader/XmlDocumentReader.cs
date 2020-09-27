@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -170,7 +171,17 @@ namespace AssemblyReader
         /// <param name="xmlDocumentation">The content of the XML code documentation.</param>
         public static void LoadXmlDocumentation(string xmlDocumentation)
         {
-            using StringReader stringReader = new StringReader(xmlDocumentation);
+            if (!File.Exists(xmlDocumentation))
+            {
+                throw new Exception("File doesn't exist");
+            }
+
+            //https://www.ipreferjim.com/2014/09/data-at-the-root-level-is-invalid-line-1-position-1/
+            var xml = File.ReadAllText(xmlDocumentation);
+            //var byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble()); 
+            //if (xml.StartsWith(byteOrderMarkUtf8)) { xml = xml.Remove(0, byteOrderMarkUtf8.Length); }
+
+            using StringReader stringReader = new StringReader(xml);
             LoadXmlDocumentation(stringReader);
         }
 
@@ -178,6 +189,10 @@ namespace AssemblyReader
         /// <param name="textReader">The text reader to process in an XmlReader.</param>
         public static void LoadXmlDocumentation(TextReader textReader)
         {
+            //var r = new XmlReaderSettings
+            //{
+            //    ValidationType = ValidationType.None
+            //};
             using XmlReader xmlReader = XmlReader.Create(textReader);
             while (xmlReader.Read())
             {
