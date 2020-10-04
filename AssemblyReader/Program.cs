@@ -13,27 +13,30 @@ namespace AssemblyReader
             //var sb = new StringBuilder("Documentation");
             //MTOA.BLL.Interfaces.dll
             
-            var assembly = typeof(User).Assembly;            
-            foreach (Type type in assembly.GetTypes())
-            {
-                foreach (var methodInfo in type.GetMethods())
-                {
-                    var methodDocumentation = methodInfo.GetDocumentation();
-                    if (!string.IsNullOrWhiteSpace(methodDocumentation))
-                    {
-                        Console.WriteLine(methodDocumentation);
-                    }
+            //var assembly = typeof(User).Assembly;            
+            //foreach (Type type in assembly.GetTypes())
+            //{
+            //    foreach (var methodInfo in type.GetMethods())
+            //    {
+            //        var methodDocumentation = methodInfo.GetDocumentation();
+            //        if (!string.IsNullOrWhiteSpace(methodDocumentation))
+            //        {
+            //            Console.WriteLine(methodDocumentation);
+            //        }
 
-                    foreach (ParameterInfo parameterInfo in methodInfo.GetParameters())
-                    {
-                        var parameterDocumentation = parameterInfo.GetDocumentation();
-                        if (!string.IsNullOrWhiteSpace(parameterDocumentation))
-                        {
-                            Console.WriteLine(parameterDocumentation);
-                        }                        
-                    }
-                }
-            }
+            //        foreach (ParameterInfo parameterInfo in methodInfo.GetParameters())
+            //        {
+            //            var parameterDocumentation = parameterInfo.GetDocumentation();
+            //            if (!string.IsNullOrWhiteSpace(parameterDocumentation))
+            //            {
+            //                Console.WriteLine(parameterDocumentation);
+            //            }                        
+            //        }
+            //    }
+            //}
+
+            const string path = @"C:\Users\gaeta\source\repos\AssemblyDetails\ClassLibrary\bin\Debug\ClassLibrary.xml";
+            new XmlParser().Parse(path);
 
             //foreach (var file in files)
             //{

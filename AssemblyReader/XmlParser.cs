@@ -8,7 +8,6 @@ namespace AssemblyReader
     {
         internal void Parse(string path)
         {
-            //const string path = @"C:\";
             var root = XElement.Load(path);
             var w = root.Elements("members").Descendants("member")
                 .Select(x => new
@@ -31,10 +30,7 @@ namespace AssemblyReader
                     Console.WriteLine("\t" + item.Value);
                 }
                 Console.WriteLine();
-            }
-
-            Console.ReadKey();
-            Console.WriteLine("Done!");
+            }            
         }
     }
 }
